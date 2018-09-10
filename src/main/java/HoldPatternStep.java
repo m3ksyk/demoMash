@@ -1,10 +1,12 @@
-public class HoldPatternStep extends Step{
+import java.time.LocalDateTime;
+
+public class HoldPatternStep implements Step{
     private int time;//time in minutes
-    private double temperature;
-    //add min/max temp?
-    public HoldPatternStep(int time, double temperature) {
+    private double targetTemperature;
+
+    public HoldPatternStep(int time, double targetTemperature) {
         this.time = time;
-        this.temperature = temperature;
+        this.targetTemperature = targetTemperature;
     }
 
     public int getTime() {
@@ -15,11 +17,36 @@ public class HoldPatternStep extends Step{
         this.time = time;
     }
 
-    public double getTemperature() {
-        return temperature;
+    public double getTargetTemperature() {
+        return targetTemperature;
     }
 
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
+    public void setTargetTemperature(double targetTemperature) {
+        this.targetTemperature = targetTemperature;
+    }
+
+    @Override
+    public void performStep() {
+                LocalDateTime current = LocalDateTime.now();
+                LocalDateTime endTime = LocalDateTime.now().plusMinutes(this.getTime());
+                System.out.println("Step target temperature " + this.getTargetTemperature());
+                System.out.println("Step target time " + this.getTime());
+                System.out.println("Current time " + current);
+                System.out.println("Expected end time " + endTime);
+                while (LocalDateTime.now().isBefore(endTime)){
+                    double currentTemp = ProcessManager.getTemperature();
+                    if(currentTemp < this.getTargetTemperature()){
+                        //+/- 0.5?
+                        System.out.println("Temperature too low. HEATING ON");
+    //                    if (!isHeating){
+    //                        turnOnHeater();
+                    } else if (currentTemp < this.getTargetTemperature()){
+                        System.out.println("Temperature too high. HEATING Off");
+                        //                    if (isHeating){
+                        //                        turnOffHeater();
+                    } else {
+                        System.out.println("OK.");
+                    }
+                }
     }
 }
