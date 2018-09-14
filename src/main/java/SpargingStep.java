@@ -1,4 +1,4 @@
-public Class SpargingStep implements Step{
+public class SpargingStep implements Step{
  private double SpargingWaterVolume;
  
  @Override

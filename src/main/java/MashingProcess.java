@@ -8,8 +8,13 @@ public class MashingProcess {
 
         this.processSteps = new ArrayList<Step>();
     }
+    public MashingProcess() {
 
+    }
     public List<Step> getProcessSteps() {
+        if (processSteps == null){
+            processSteps = new ArrayList<>();
+        }
         return processSteps;
     }
 
@@ -17,17 +22,12 @@ public class MashingProcess {
         this.processSteps = processSteps;
     }
 
-    public MashingProcess() {
-
-    }
     public void addStepToProcess(Step ms){
         List<Step> processSteps= this.getProcessSteps();
-        if (processSteps == null){
-            processSteps = new ArrayList<>();
-        }
         processSteps.add(ms);
         this.setProcessSteps(processSteps);
     }
+    //TODO remove step from process?
 
 }
 
